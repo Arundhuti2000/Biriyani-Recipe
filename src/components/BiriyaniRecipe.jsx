@@ -1,18 +1,19 @@
 import React, { useState } from "react";
 import Timer from "./Timer";
-import { Check, ChevronRight, Clock, Utensils } from "lucide-react";
+import { Check, ChevronRight, Clock, Utensils, Info } from "lucide-react";
 
 const BiriyaniRecipe = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const [completedSteps, setCompletedSteps] = useState([]);
+  const [showTip, setShowTip] = useState(null);
 
   const ingredients = [
     { id: 1, name: "Basmati Rice", amount: "2 cups", icon: "🍚" },
     { id: 2, name: "Chicken", amount: "500g", icon: "🍗" },
     { id: 3, name: "Onions", amount: "2 large", icon: "🧅" },
     { id: 4, name: "Yogurt", amount: "1 cup", icon: "🥛" },
-    { id: 5, name: "Biryani Masala", amount: "3 tbsp", icon: "🌶" },
-    { id: 6, name: "Chicken Masala", amount: "2 tbsp", icon: "🐔" },
+    { id: 5, name: "Biryani Masala", amount: "3 tbsp", icon: "🥄" },
+    { id: 6, name: "Chicken Masala", amount: "2 tbsp", icon: "🥄" },
     { id: 7, name: "Garam Masala", amount: "1/2 tbsp", icon: "🍛" },
     { id: 8, name: "Ginger-Garlic Paste", amount: "2 tbsp", icon: "🫚" },
     { id: 9, name: "Lemon Juice", amount: "2 tbsp", icon: "🍋" },
@@ -82,7 +83,7 @@ const BiriyaniRecipe = () => {
       </h1>
 
       <div className="mb-10">
-        <h2 className="text-2xl font-semibold text-gray-700 mb-6 flex items-center">
+        <h2 className="text-2xl font-semibold backdrop-blur text-gray-700 mb-6 flex items-center">
           <Utensils className="w-6 h-6 mr-2" />
           <span>Ingredients</span>
           <div className="h-px flex-grow bg-gray-200 ml-4"></div>
@@ -105,8 +106,8 @@ const BiriyaniRecipe = () => {
 
       {/* Cooking Steps section */}
       <div className="space-y-4">
-        <h2 className="text-xl font-medium flex items-center gap-2">
-          <Clock className="w-5 h-5" />
+        <h2 className="text-2xl font-semibold backdrop-blur text-gray-700 mb-6 flex items-center">
+          <Clock className="w-6 h-6 mr-2" />
           Cooking Steps
         </h2>
 
@@ -168,9 +169,24 @@ const BiriyaniRecipe = () => {
                     </button>
                   </div>
                 </div>
-                <div className="ml-14 text-gray-600  p-2 rounded-lg ">
-                  💡 Tip: {step.tip}
+                <div className="ml-14 flex items-center gap-2">
+                  <span
+                    className="w-6 h-6 text-grey-400 cursor-pointer"
+                    onClick={() =>
+                      setShowTip(showTip === step.id ? null : step.id)
+                    }
+                  >
+                    💡
+                  </span>
+                  {showTip === step.id && (
+                    <div className="text-grey-600 bg-gray-50 p-3 rounded-lg">
+                      {step.tip}
+                    </div>
+                  )}
                 </div>
+                {/* <div className="ml-14 text-gray-600  p-2 rounded-lg ">
+                  💡 Tip: {step.tip}
+                </div> */}
               </div>
             </div>
           ))}
@@ -179,7 +195,7 @@ const BiriyaniRecipe = () => {
 
       {/* Progress Section */}
       <div className="text-center">
-        <div className="mb-2 text-gray-600 font-medium">
+        <div className="mt-2 mb-2 text-gray-600 font-medium">
           Progress: {completedSteps.length} / {steps.length} steps completed
         </div>
         <div className="w-full bg-gray-200 rounded-full h-3">
