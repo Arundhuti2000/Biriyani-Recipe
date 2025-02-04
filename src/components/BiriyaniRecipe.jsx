@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import Timer from "./Timer";
 import { Check, ChevronRight, Clock, Utensils, Info } from "lucide-react";
 
@@ -6,6 +6,7 @@ const BiriyaniRecipe = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const [completedSteps, setCompletedSteps] = useState([]);
   const [showTip, setShowTip] = useState(null);
+  const timerRefs = useRef({});
 
   const ingredients = [
     { id: 1, name: "Basmati Rice", amount: "2 cups", icon: "🍚" },
@@ -61,6 +62,10 @@ const BiriyaniRecipe = () => {
 
   const handleStepComplete = (stepId) => {
     if (!completedSteps.includes(stepId)) {
+      if (timerRefs.current[stepId]?.current?.stop) {
+        timerRefs.current[stepId].current.stop();
+      }
+
       setCompletedSteps([...completedSteps, stepId]);
       if (currentStep < steps.length - 1) {
         setCurrentStep(currentStep + 1);
@@ -68,11 +73,11 @@ const BiriyaniRecipe = () => {
     }
   };
 
-  const markStepComplete = (stepId) => {
-    if (!completedSteps.includes(stepId)) {
-      handleStepComplete(stepId);
-    }
-  };
+  // const markStepComplete = (stepId) => {
+  //   if (!completedSteps.includes(stepId)) {
+  //     handleStepComplete(stepId);
+  //   }
+  // };
 
   const progressPercentage = (completedSteps.length / steps.length) * 100;
 
@@ -112,84 +117,89 @@ const BiriyaniRecipe = () => {
         </h2>
 
         <div className="space-y-4">
-          {steps.map((step, index) => (
-            <div
-              key={step.id}
-              className={`p-6 rounded-lg transition-all duration-200 ${
-                currentStep === index
-                  ? "bg-gray-100 border-2 border-gray-300 shadow-lg"
-                  : completedSteps.includes(step.id)
-                  ? "bg-green-50 border border-green-200"
-                  : "bg-white border border-gray-200 hover:border-gray-300"
-              }`}
-            >
-              <div className="flex flex-col gap-4">
-                <div className="text-xl grid grid-cols-[1fr_auto] items-center gap-4">
-                  <div className="flex items-center gap-4">
-                    {completedSteps.includes(step.id) ? (
-                      <div className="bg-green-100 p-2 rounded-full flex-shrink-0">
-                        <Check className="text-green-600 w-5 h-5" />
-                      </div>
-                    ) : (
-                      <div className="bg-gray-100 p-2 rounded-full flex-shrink-0">
-                        <ChevronRight className="text-gray-600 w-5 h-5" />
-                      </div>
-                    )}
+          {steps.map((step, index) => {
+            // Create a ref for each timer
+            if (!timerRefs.current[step.id]) {
+              timerRefs.current[step.id] = React.createRef();
+            }
+
+            return (
+              <div
+                key={step.id}
+                className={`p-6 rounded-lg transition-all duration-200 ${
+                  currentStep === index
+                    ? "bg-gray-100 border-2 border-gray-300 shadow-lg"
+                    : completedSteps.includes(step.id)
+                    ? "bg-green-50 border border-green-200"
+                    : "bg-white border border-gray-200 hover:border-gray-300"
+                }`}
+              >
+                <div className="flex flex-col gap-4">
+                  <div className="text-xl grid grid-cols-[1fr_auto] items-center gap-4">
+                    <div className="flex items-center gap-4">
+                      {completedSteps.includes(step.id) ? (
+                        <div className="bg-green-100 p-2 rounded-full flex-shrink-0">
+                          <Check className="text-green-600 w-5 h-5" />
+                        </div>
+                      ) : (
+                        <div className="bg-gray-100 p-2 rounded-full flex-shrink-0">
+                          <ChevronRight className="text-gray-600 w-5 h-5" />
+                        </div>
+                      )}
+                      <span
+                        className={
+                          completedSteps.includes(step.id)
+                            ? "text-gray-500"
+                            : "text-gray-700"
+                        }
+                      >
+                        {step.text}
+                      </span>
+                    </div>
+                    <div className="flex font-medium items-center gap-4 flex-shrink-0">
+                      <Timer
+                        duration={step.duration}
+                        onComplete={() => handleStepComplete(step.id)}
+                        onReset={() => {
+                          setCompletedSteps([]);
+                          setCurrentStep(0);
+                        }}
+                        timerRef={timerRefs.current[step.id]}
+                      />
+                      <button
+                        onClick={() => handleStepComplete(step.id)}
+                        className={`px-4 py-2 rounded-lg tracking-wide font-medium transition-colors whitespace-nowrap ${
+                          completedSteps.includes(step.id)
+                            ? "bg-green-100 text-green-700 cursor-default"
+                            : "bg-green-700 text-white hover:bg-green-800"
+                        }`}
+                        disabled={completedSteps.includes(step.id)}
+                      >
+                        {completedSteps.includes(step.id)
+                          ? "Completed"
+                          : "Mark Complete"}
+                      </button>
+                    </div>
+                  </div>
+                  <div className="ml-14 flex items-center gap-2">
                     <span
-                      className={
-                        completedSteps.includes(step.id)
-                          ? "text-gray-500"
-                          : "text-gray-700"
+                      className="w-6 h-6 text-grey-400 cursor-pointer"
+                      onClick={() =>
+                        setShowTip(showTip === step.id ? null : step.id)
                       }
                     >
-                      {step.text}
+                      💡
                     </span>
-                  </div>
-                  <div className="flex font-medium items-center gap-4 flex-shrink-0">
-                    <Timer
-                      duration={step.duration}
-                      onComplete={() => handleStepComplete(step.id)}
-                      onReset={() => {
-                        setCompletedSteps([]);
-                        setCurrentStep(0);
-                      }}
-                    />
-                    <button
-                      onClick={() => markStepComplete(step.id)}
-                      className={`px-4 py-2 rounded-lg tracking-wide font-medium transition-colors  whitespace-nowrap ${
-                        completedSteps.includes(step.id)
-                          ? "bg-green-100 text-green-700 cursor-default"
-                          : "bg-green-700 text-white hover:bg-green-800"
-                      }`}
-                      disabled={completedSteps.includes(step.id)}
-                    >
-                      {completedSteps.includes(step.id)
-                        ? "Completed"
-                        : "Mark Complete"}
-                    </button>
+                    {showTip === step.id && (
+                      <div className="text-grey-600 bg-gray-50 p-3 rounded-lg">
+                        {step.tip}
+                      </div>
+                    )}
                   </div>
                 </div>
-                <div className="ml-14 flex items-center gap-2">
-                  <span
-                    className="w-6 h-6 text-grey-400 cursor-pointer"
-                    onClick={() =>
-                      setShowTip(showTip === step.id ? null : step.id)
-                    }
-                  >
-                    💡
-                  </span>
-                  {showTip === step.id && (
-                    <div className="text-grey-600 bg-gray-50 p-3 rounded-lg">
-                      {step.tip}
-                    </div>
-                  )}
-                </div>
-                {/* <div className="ml-14 text-gray-600  p-2 rounded-lg ">
-                  💡 Tip: {step.tip}
-                </div> */}
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
 

@@ -1,8 +1,19 @@
 import React, { useState, useEffect } from "react";
 
-const Timer = ({ duration, onComplete, onReset }) => {
+const Timer = ({ duration, onComplete, onReset, timerRef }) => {
   const [timeLeft, setTimeLeft] = useState(duration);
   const [isActive, setIsActive] = useState(false);
+
+  useEffect(() => {
+    if (timerRef) {
+      timerRef.current = {
+        stop: () => {
+          setIsActive(false);
+          setTimeLeft(duration);
+        },
+      };
+    }
+  }, [timerRef, duration]);
 
   useEffect(() => {
     let interval;
