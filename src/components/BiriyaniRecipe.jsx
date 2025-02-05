@@ -132,7 +132,7 @@ const BiriyaniRecipe = () => {
       <div className="mb-4 md:mb-8">
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-6 md:mb-20 gap-4">
           <h2 className="text-3xl md:text-6xl font-bold text-red-700 flex items-center gap-3">
-            <Flame className="w-8 h-8 md:w-15 md:h-15 text-orange-500" />
+            <Flame className="w-12 h-12 md:w-20 md:h-20 text-orange-500" />
             Arundhati's Special Chicken Biriyani Recipe
           </h2>
           <div className="flex items-center gap-2 text-gray-600 text-base md:text-xl">
@@ -177,7 +177,6 @@ const BiriyaniRecipe = () => {
 
         <div className="space-y-4">
           {steps.map((step, index) => {
-            // Create a ref for each timer
             if (!timerRefs.current[step.id]) {
               timerRefs.current[step.id] = React.createRef();
             }
