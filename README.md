@@ -2,8 +2,12 @@
 
 A dynamic React application that guides users through making the perfect chicken biryani with interactive timers and step tracking.
 
-![Biryani Recipe App](https://example.com/screenshot.png)
+![image](https://github.com/user-attachments/assets/3911ab2c-8e96-4674-a729-c3fa97b073b0)
 
+![image](https://github.com/user-attachments/assets/55021ed1-0ce0-4cb9-b6e4-7ac9ba452787)
+
+Link: https://biryani-recipe-app-16032.web.app/
+biryani-recipe.arundhatidas.com
 ## ✨ Features
 
 - Step-by-step cooking instructions with timers
