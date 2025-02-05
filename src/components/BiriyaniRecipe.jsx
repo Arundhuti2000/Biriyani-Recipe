@@ -1,6 +1,21 @@
 import React, { useState, useRef } from "react";
 import Timer from "./Timer";
-import { Check, ChevronRight, Clock, Utensils, Flame } from "lucide-react";
+import {
+  Check,
+  ChevronRight,
+  Clock,
+  Utensils,
+  Flame,
+  Heart,
+  ChevronDownIcon,
+  ChevronFirst,
+  ChevronDownSquare,
+  ChevronRightSquare,
+  ChevronRightCircle,
+  ChevronRightCircleIcon,
+  ChevronsLeftRightEllipsisIcon,
+  LucideChevronsRight,
+} from "lucide-react";
 
 const BiriyaniRecipe = () => {
   const [currentStep, setCurrentStep] = useState(0);
@@ -73,6 +88,37 @@ const BiriyaniRecipe = () => {
     }
   };
 
+  // const CompletionMessage = () => {
+  //   if (completedSteps.length === steps.length) {
+  //     return (
+  //       <div className="mt-8 text-center space-y-4">
+  //         <p className="text-gray-600 mb-2">
+  //           {completedSteps.length === steps.length ? (
+  //             <span className="flex items-center justify-center gap-2 text-green-600 font-medium">
+  //               <Heart className="w-5 h-5" /> Congratulations! Your Biryani is
+  //               ready to serve!
+  //             </span>
+  //           ) : (
+  //             `${completedSteps.length} of ${steps.length} steps completed`
+  //           )}
+  //         </p>
+  //         <div className="max-w-sm mx-auto rounded-xl overflow-hidden shadow-lg">
+  //           {/* <img
+  //             src="/biryani-recipe/public/Biriyani.png"
+  //             alt="Delicious Biryani"
+  //             className="w-full h-full object-cover rounded-xl"
+  //           /> */}
+  //           <div className="p-4 bg-orange-50">
+  //             <p className="text-orange-600 font-medium">
+  //               Time to enjoy your homemade Biryani! 🎉
+  //             </p>
+  //           </div>
+  //         </div>
+  //       </div>
+  //     );
+  //   }
+  // };
+
   // const markStepComplete = (stepId) => {
   //   if (!completedSteps.includes(stepId)) {
   //     handleStepComplete(stepId);
@@ -82,12 +128,12 @@ const BiriyaniRecipe = () => {
   const progressPercentage = (completedSteps.length / steps.length) * 100;
 
   return (
-    <div className="max-w-8xl mx-auto p-8 bg-white rounded-xl shadow-lg">
+    <div className="max-w-8xl mx-auto p-20 bg-white rounded-xl shadow-lg">
       <div className="mb-8">
-        <div className="flex items-center justify-between mb-6">
-          <h2 className="text-5xl font-bold text-gray-700 flex text-centre gap-3">
-            <Flame className="w-12 h-12  text-orange-500 text-centre" />
-            Cooking Journey
+        <div className="flex items-center justify-between mb-20">
+          <h2 className="text-6xl font-bold text-red-700 flex text-center gap-3">
+            <Flame className="w-15 h-15  text-orange-500 text-center" />
+            Arundhati's Special Chicken Biriyani Recipe
           </h2>
           <div className="flex items-center gap-2 text-gray-600 text-xl">
             <Clock className="w-8 h-8" />
@@ -160,7 +206,7 @@ const BiriyaniRecipe = () => {
                           }
                         `}
                         >
-                          <span className="text-gray-600 font-medium">
+                          <span className="text-white-600 font-medium">
                             {index + 1}
                           </span>
                         </div>
@@ -168,14 +214,14 @@ const BiriyaniRecipe = () => {
                       <span
                         className={
                           completedSteps.includes(step.id)
-                            ? "text-gray-700 font-medium"
-                            : "text-gray-500 font-medium"
+                            ? "text-gray-600 font-small"
+                            : "text-gray-900 font-medium"
                         }
                       >
                         {step.text}
                       </span>
                     </div>
-                    <div className="flex font-medium items-center gap-4 flex-shrink-0">
+                    <div className="flex font-medium items-center gap-5 flex-shrink-0">
                       <Timer
                         duration={step.duration}
                         onComplete={() => handleStepComplete(step.id)}
@@ -187,10 +233,10 @@ const BiriyaniRecipe = () => {
                       />
                       <button
                         onClick={() => handleStepComplete(step.id)}
-                        className={`px-4 py-2 rounded-lg tracking-wide font-medium transition-colors whitespace-nowrap ${
+                        className={`px-4 py-2.5 rounded-lg flex-box font-medium transition-all duration-200 ${
                           completedSteps.includes(step.id)
                             ? "bg-green-100 text-green-700 cursor-default"
-                            : "bg-green-700 text-white hover:bg-green-800"
+                            : "bg-green-700 text-white hover:bg-orange-600"
                         }`}
                         disabled={completedSteps.includes(step.id)}
                       >
@@ -207,10 +253,10 @@ const BiriyaniRecipe = () => {
                         setShowTip(showTip === step.id ? null : step.id)
                       }
                     >
-                      💡
+                      <LucideChevronsRight className="w-6 h-6 text-amber-500 mt-0.5" />
                     </span>
                     {showTip === step.id && (
-                      <div className="text-grey-600 bg-gray-50 p-3 rounded-lg">
+                      <div className="text-amber-600 bg-orange-50 p-3 rounded-lg mt-0.5">
                         {step.tip}
                       </div>
                     )}
@@ -223,16 +269,26 @@ const BiriyaniRecipe = () => {
       </div>
 
       {/* Progress Section */}
-      <div className="text-center">
-        <div className="mt-2 mb-2 text-gray-600 font-medium">
-          Progress: {completedSteps.length} / {steps.length} steps completed
-        </div>
-        <div className="w-full bg-gray-200 rounded-full h-3">
+      <div className="text-center p-6">
+        <div className="w-full bg-gray-200 rounded-full h-2">
           <div
-            className="bg-green-500 h-3 rounded-full transition-all duration-300"
+            className="h-2  bg-gradient-to-r from-orange-400 to-red-500 rounded-full transition-all duration-500"
             style={{ width: `${progressPercentage}%` }}
           ></div>
         </div>
+      </div>
+
+      <div className="mt-8 text-center">
+        <p className="text-gray-600 mb-2">
+          {completedSteps.length === steps.length ? (
+            <span className="flex items-center justify-center gap-2 text-green-600 font-medium">
+              <Heart className="w-5 h-5" /> Congratulations! Your Biryani is
+              ready to serve!
+            </span>
+          ) : (
+            `${completedSteps.length} of ${steps.length} steps completed`
+          )}
+        </p>
       </div>
     </div>
   );
