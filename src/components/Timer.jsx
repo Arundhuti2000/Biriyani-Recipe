@@ -48,19 +48,19 @@ const Timer = ({ duration, onComplete, onReset, timerRef }) => {
   };
 
   return (
-    <div className="flex items-center gap-2">
-      <span className="font-mono text-xl min-w-[4rem] text-gray-600">
+    <div className="flex items-center gap-4">
+      <span className="font-mono text-base sm:text-xl text-gray-600 min-w-[4rem]">
         {formatTime(timeLeft)}
       </span>
       <button
         onClick={toggleTimer}
-        className="px-4 py-2 flex-box rounded-lg bg-sky-600 text-white hover:bg-sky-700 transition-colors min-w-[4rem]"
+        className="px-4 py-2 rounded-lg bg-sky-600 text-white hover:bg-sky-700 transition-colors min-w-[4rem]"
       >
         {isActive ? "Pause" : "Start"}
       </button>
       <button
         onClick={handleReset}
-        className="px-4 py-2 flex-box rounded-lg bg-orange-400 text-white hover:bg-orange-500 transition-colors"
+        className="px-4 py-2 rounded-lg bg-orange-400 text-white hover:bg-orange-500 transition-colors"
       >
         Reset
       </button>
