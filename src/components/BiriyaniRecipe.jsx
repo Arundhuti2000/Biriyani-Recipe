@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import Timer from "./Timer";
-import { Check, ChevronRight, Clock, Utensils, Info } from "lucide-react";
+import { Check, ChevronRight, Clock, Utensils, Flame } from "lucide-react";
 
 const BiriyaniRecipe = () => {
   const [currentStep, setCurrentStep] = useState(0);
@@ -83,9 +83,18 @@ const BiriyaniRecipe = () => {
 
   return (
     <div className="max-w-8xl mx-auto p-8 bg-white rounded-xl shadow-lg">
-      <h1 className="text-4xl font-bold text-gray-800 mb-8 text-center">
-        Classic Chicken Biryani
-      </h1>
+      <div className="mb-8">
+        <div className="flex items-center justify-between mb-6">
+          <h2 className="text-5xl font-bold text-gray-700 flex text-centre gap-3">
+            <Flame className="w-12 h-12  text-orange-500 text-centre" />
+            Cooking Journey
+          </h2>
+          <div className="flex items-center gap-2 text-gray-600 text-xl">
+            <Clock className="w-8 h-8" />
+            <span>Total Time: 2h 15m</span>
+          </div>
+        </div>
+      </div>
 
       <div className="mb-10">
         <h2 className="text-2xl font-semibold backdrop-blur text-gray-700 mb-6 flex items-center">
@@ -126,31 +135,41 @@ const BiriyaniRecipe = () => {
             return (
               <div
                 key={step.id}
-                className={`p-6 rounded-lg transition-all duration-200 ${
+                className={`p-6 rounded-lg transition-all duration-300 ${
                   currentStep === index
-                    ? "bg-gray-100 border-2 border-gray-300 shadow-lg"
+                    ? "bg-white-100 border-2 border-orange-400 shadow-lg"
                     : completedSteps.includes(step.id)
-                    ? "bg-green-50 border border-green-200"
-                    : "bg-white border border-gray-200 hover:border-gray-300"
+                    ? "bg-white-50 border border-green-200"
+                    : "bg-white border border-gray-100 hover:border-gray-200"
                 }`}
               >
-                <div className="flex flex-col gap-4">
-                  <div className="text-xl grid grid-cols-[1fr_auto] items-center gap-4">
+                <div className="flex flex-col gap-6">
+                  <div className="text-xl grid grid-cols-[1fr_auto] items-center gap-6">
                     <div className="flex items-center gap-4">
                       {completedSteps.includes(step.id) ? (
-                        <div className="bg-green-100 p-2 rounded-full flex-shrink-0">
+                        <div className="bg-green-100 p-2 justify-center rounded-full flex-shrink-0">
                           <Check className="text-green-600 w-5 h-5" />
                         </div>
                       ) : (
-                        <div className="bg-gray-100 p-2 rounded-full flex-shrink-0">
-                          <ChevronRight className="text-gray-600 w-5 h-5" />
+                        <div
+                          className={`p-2 rounded-full flex-shrink-0 w-8 h-8 flex items-center justify-center
+                          ${
+                            currentStep === index
+                              ? "bg-orange-400 text-white"
+                              : "bg-gray-100 text-gray-600"
+                          }
+                        `}
+                        >
+                          <span className="text-gray-600 font-medium">
+                            {index + 1}
+                          </span>
                         </div>
                       )}
                       <span
                         className={
                           completedSteps.includes(step.id)
-                            ? "text-gray-500"
-                            : "text-gray-700"
+                            ? "text-gray-700 font-medium"
+                            : "text-gray-500 font-medium"
                         }
                       >
                         {step.text}
