@@ -128,37 +128,41 @@ const BiriyaniRecipe = () => {
   const progressPercentage = (completedSteps.length / steps.length) * 100;
 
   return (
-    <div className="max-w-8xl mx-auto p-20 bg-white rounded-xl shadow-lg">
-      <div className="mb-8">
-        <div className="flex items-center justify-between mb-20">
-          <h2 className="text-6xl font-bold text-red-700 flex text-center gap-3">
-            <Flame className="w-15 h-15  text-orange-500 text-center" />
+    <div className="max-w-8xl mx-auto p-4 md:p-20 bg-white rounded-xl shadow-lg">
+      <div className="mb-4 md:mb-8">
+        <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-6 md:mb-20 gap-4">
+          <h2 className="text-3xl md:text-6xl font-bold text-red-700 flex items-center gap-3">
+            <Flame className="w-8 h-8 md:w-15 md:h-15 text-orange-500" />
             Arundhati's Special Chicken Biriyani Recipe
           </h2>
-          <div className="flex items-center gap-2 text-gray-600 text-xl">
-            <Clock className="w-8 h-8" />
-            <span>Total Time: 2h 15m</span>
+          <div className="flex items-center gap-2 text-gray-600 text-base md:text-xl">
+            <Clock className="w-6 h-6 md:w-8 md:h-8" />
+            <span>Total Time: 3h 15m</span>
           </div>
         </div>
       </div>
-
-      <div className="mb-10">
-        <h2 className="text-2xl font-semibold backdrop-blur text-gray-700 mb-6 flex items-center">
-          <Utensils className="w-6 h-6 mr-2" />
+      {/*Ingredients Section */}
+      <div className="mb-6 md:mb-10">
+        <h2 className="text-xl md:text-2xl font-semibold text-gray-700 mb-4 md:mb-6 flex items-center">
+          <Utensils className="w-5 h-5 md:w-6 md:h-6 mr-2" />
           <span>Ingredients</span>
           <div className="h-px flex-grow bg-gray-200 ml-4"></div>
         </h2>
-        <div className="grid md:grid-cols-5 gap-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-4 md:gap-10">
           {ingredients.map((item) => (
             <div
               key={item.id}
-              className="flex items-center justify-between bg-gray-50 p-4 rounded-lg shadow-sm hover:shadow-md transition-all duration-200"
+              className="flex items-center justify-between bg-gray-50 p-3 md:p-4 rounded-lg shadow-sm hover:shadow-md transition-all duration-200"
             >
               <div className="flex items-center gap-3">
-                <span className="text-6xl">{item.icon}</span>
-                <span className="text-xl text-gray-600">{item.name}</span>
+                <span className="text-4xl md:text-6xl">{item.icon}</span>
+                <span className="text-base md:text-xl text-gray-600">
+                  {item.name}
+                </span>
               </div>
-              <span className="text-xl text-gray-600">{item.amount}</span>
+              <span className="text-base md:text-xl text-gray-600">
+                {item.amount}
+              </span>
             </div>
           ))}
         </div>
@@ -166,8 +170,8 @@ const BiriyaniRecipe = () => {
 
       {/* Cooking Steps section */}
       <div className="space-y-4">
-        <h2 className="text-2xl font-semibold backdrop-blur text-gray-700 mb-6 flex items-center">
-          <Clock className="w-6 h-6 mr-2" />
+        <h2 className="text-xl md:text-2xl font-semibold text-gray-700 mb-4 md:mb-6 flex items-center">
+          <Clock className="w-5 h-5 md:w-6 md:h-6 mr-2" />
           Cooking Steps
         </h2>
 
@@ -189,8 +193,8 @@ const BiriyaniRecipe = () => {
                     : "bg-white border border-gray-100 hover:border-gray-200"
                 }`}
               >
-                <div className="flex flex-col gap-6">
-                  <div className="text-xl grid grid-cols-[1fr_auto] items-center gap-6">
+                <div className="flex flex-col gap-4 md:gap-6">
+                  <div className="flex flex-col md:grid md:grid-cols-[1fr_auto] items-start md:items-center gap-4 md:gap-6">
                     <div className="flex items-center gap-4">
                       {completedSteps.includes(step.id) ? (
                         <div className="bg-green-100 p-2 justify-center rounded-full flex-shrink-0">
@@ -212,16 +216,16 @@ const BiriyaniRecipe = () => {
                         </div>
                       )}
                       <span
-                        className={
+                        className={`text-sm md:text-base ${
                           completedSteps.includes(step.id)
                             ? "text-gray-600 font-small"
                             : "text-gray-900 font-medium"
-                        }
+                        }`}
                       >
                         {step.text}
                       </span>
                     </div>
-                    <div className="flex font-medium items-center gap-5 flex-shrink-0">
+                    <div className="flex flex-col md:flex-row w-full md:w-auto items-start md:items-center gap-3 md:gap-5">
                       <Timer
                         duration={step.duration}
                         onComplete={() => handleStepComplete(step.id)}
@@ -233,7 +237,7 @@ const BiriyaniRecipe = () => {
                       />
                       <button
                         onClick={() => handleStepComplete(step.id)}
-                        className={`px-4 py-2.5 rounded-lg flex-box font-medium transition-all duration-200 ${
+                        className={`w-full md:w-auto px-4 py-2.5 rounded-lg font-medium transition-all duration-200 ${
                           completedSteps.includes(step.id)
                             ? "bg-green-100 text-green-700 cursor-default"
                             : "bg-green-700 text-white hover:bg-orange-600"
@@ -246,17 +250,17 @@ const BiriyaniRecipe = () => {
                       </button>
                     </div>
                   </div>
-                  <div className="ml-14 flex items-center gap-2">
+                  <div className="ml-12 md:ml-14 flex items-center gap-2">
                     <span
-                      className="w-6 h-6 text-grey-400 cursor-pointer"
+                      className="text-amber-500 hover:text-amber-600"
                       onClick={() =>
                         setShowTip(showTip === step.id ? null : step.id)
                       }
                     >
-                      <LucideChevronsRight className="w-6 h-6 text-amber-500 mt-0.5" />
+                      <LucideChevronsRight className="w-5 h-5 md:w-6 md:h-6" />
                     </span>
                     {showTip === step.id && (
-                      <div className="text-amber-600 bg-orange-50 p-3 rounded-lg mt-0.5">
+                      <div className="text-sm md:text-base text-amber-600 bg-orange-50 p-3 rounded-lg">
                         {step.tip}
                       </div>
                     )}
@@ -269,17 +273,17 @@ const BiriyaniRecipe = () => {
       </div>
 
       {/* Progress Section */}
-      <div className="text-center p-6">
+      <div className="p-4 md:p-6 text-center">
         <div className="w-full bg-gray-200 rounded-full h-2">
           <div
-            className="h-2  bg-gradient-to-r from-orange-400 to-red-500 rounded-full transition-all duration-500"
+            className="h-2 bg-gradient-to-r from-orange-400 to-red-500 rounded-full transition-all duration-500"
             style={{ width: `${progressPercentage}%` }}
           ></div>
         </div>
       </div>
 
-      <div className="mt-8 text-center">
-        <p className="text-gray-600 mb-2">
+      <div className="mt-4 md:mt-8 text-center">
+        <p className="text-sm md:text-base text-gray-600 mb-2">
           {completedSteps.length === steps.length ? (
             <span className="flex items-center justify-center gap-2 text-green-600 font-medium">
               <Heart className="w-5 h-5" /> Congratulations! Your Biryani is
