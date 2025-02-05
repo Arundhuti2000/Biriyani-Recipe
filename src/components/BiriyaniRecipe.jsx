@@ -1,5 +1,6 @@
 import React, { useState, useRef } from "react";
 import Timer from "./Timer";
+import SocialShare from "./SocialShare";
 import {
   Check,
   ChevronRight,
@@ -7,13 +8,8 @@ import {
   Utensils,
   Flame,
   Heart,
-  ChevronDownIcon,
-  ChevronFirst,
-  ChevronDownSquare,
-  ChevronRightSquare,
-  ChevronRightCircle,
-  ChevronRightCircleIcon,
-  ChevronsLeftRightEllipsisIcon,
+  ThumbsUp,
+  Share2,
   LucideChevronsRight,
 } from "lucide-react";
 
@@ -292,6 +288,20 @@ const BiriyaniRecipe = () => {
             `${completedSteps.length} of ${steps.length} steps completed`
           )}
         </p>
+      </div>
+      {/* Social Sharing
+      <div className="flex justify-end gap-4">
+        <button className="flex items-center gap-2 px-4 py-2 text-gray-600 hover:text-gray-800">
+          <ThumbsUp className="w-5 h-5" />
+          Like
+        </button>
+        <button className="flex items-center gap-2 px-4 py-2 text-gray-600 hover:text-gray-800">
+          <Share2 className="w-5 h-5" />
+          Share
+        </button>
+      </div> */}
+      <div className="mt-8 flex justify-end">
+        <SocialShare />
       </div>
     </div>
   );
