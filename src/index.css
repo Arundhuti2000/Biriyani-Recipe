@@ -1,1 +1,22 @@
-@import "tailwindcss";
+@import 'tailwindcss';
+
+@variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-primary-50: #fdf8f6;
+  --color-primary-100: #f2e8e5;
+  --color-primary-200: #eaddd7;
+  --color-primary-300: #e0cec7;
+  --color-primary-400: #d2bab0;
+  --color-primary-500: #a0522d;
+  --color-primary-600: #8a4524;
+  --color-primary-700: #743a1f;
+  --color-primary-800: #5e2f1a;
+  --color-primary-900: #482415;
+}
+
+@layer base {
+  body {
+    @apply bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-gray-100 transition-colors duration-300;
+  }
+}

@@ -1,54 +1,50 @@
-# 🍛 Interactive Biryani Recipe App
+# React + TypeScript + Vite
 
-A dynamic React application that guides users through making the perfect chicken biryani with interactive timers and step tracking.
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-![image](https://github.com/user-attachments/assets/3911ab2c-8e96-4674-a729-c3fa97b073b0)
+Currently, two official plugins are available:
 
-![image](https://github.com/user-attachments/assets/55021ed1-0ce0-4cb9-b6e4-7ac9ba452787)
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-Hosted: https://biryani-recipe-app-16032.web.app/
+## Expanding the ESLint configuration
 
+If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
 
-Link: [biryani-recipe.arundhatidas.com](https://biriyani-recipe.arundhatidas.com/)
-## ✨ Features
+- Configure the top-level `parserOptions` property like this:
 
-- Step-by-step cooking instructions with timers
-- Interactive progress tracking
-- Mobile-responsive design
-- Visual ingredient list with measurements
-- Cooking tips for each step
-- Progress bar and completion celebration
+```js
+export default tseslint.config({
+  languageOptions: {
+    // other options...
+    parserOptions: {
+      project: ['./tsconfig.node.json', './tsconfig.app.json'],
+      tsconfigRootDir: import.meta.dirname,
+    },
+  },
+})
+```
 
-## 🛠️ Built With
-- React
-- Tailwind CSS
-- Lucide Icons
+- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
+- Optionally add `...tseslint.configs.stylisticTypeChecked`
+- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
 
-## 📱 Mobile Support
-Fully responsive design that works seamlessly on:
-- Smartphones
-- Tablets
-- Desktop
+```js
+// eslint.config.js
+import react from 'eslint-plugin-react'
 
-## 🧪 Key Components
-
-### BiriyaniRecipe
-Main component handling:
-- Step progression
-- Timer management
-- Completion states
-
-### CookingTimer
-Interactive timer with:
-- Start/Pause functionality
-- Reset option
-- Auto-completion of steps
-
-## 🎨 Design Features
-- Orange theme inspired by spices
-- Clear typography hierarchy
-- Intuitive step progression
-- Visual feedback for completed steps
-
-## 📄 License
-MIT License - feel free to use and modify!
+export default tseslint.config({
+  // Set the react version
+  settings: { react: { version: '18.3' } },
+  plugins: {
+    // Add the react plugin
+    react,
+  },
+  rules: {
+    // other rules...
+    // Enable its recommended rules
+    ...react.configs.recommended.rules,
+    ...react.configs['jsx-runtime'].rules,
+  },
+})
+```
